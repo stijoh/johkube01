@@ -1,0 +1,34 @@
+authentik:
+  # Disable external databases - use SQLite
+  postgresql:
+    enabled: false
+  redis:
+    enabled: false
+
+  # Environment from secrets
+  envFrom:
+    - secretRef:
+        name: authentik-secret
+
+  # Additional environment variables
+  env:
+    AUTHENTIK_ERROR_REPORTING__ENABLED: "false"
+    AUTHENTIK_DISABLE_UPDATE_CHECK: "true" 
+    AUTHENTIK_DISABLE_STARTUP_ANALYTICS: "true"
+    AUTHENTIK_LOG_LEVEL: "info"
+
+  # Service configuration
+  service:
+    type: ClusterIP
+    port: 9000
+
+  # Disable default ingress
+  server:
+    ingress:
+      enabled: false
+
+  # SQLite persistence with Longhorn
+  persistence:
+    enabled: true
+    size: 5Gi
+    storageClass: "longhorn"
