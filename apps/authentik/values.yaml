@@ -1,32 +1,26 @@
+# Disable external databases
+postgresql:
+  enabled: false
+
+redis:
+  enabled: false
+
+# Authentik configuration
 authentik:
-  # Let Helm generate the secret key automatically
-  secret_key: ""  # This will auto-generate
-
-  # Disable external databases - use SQLite
-  postgresql:
+  # Let the chart auto-generate the secret key
+  secret_key: ""
+  log_level: info
+  
+# Server configuration  
+server:
+  ingress:
     enabled: false
-  redis:
-    enabled: false
 
-  # Additional environment variables
-  env:
-    AUTHENTIK_ERROR_REPORTING__ENABLED: "false"
-    AUTHENTIK_DISABLE_UPDATE_CHECK: "true" 
-    AUTHENTIK_DISABLE_STARTUP_ANALYTICS: "true"
-    AUTHENTIK_LOG_LEVEL: "info"
+# Worker configuration
+worker: {}
 
-  # Service configuration
-  service:
-    type: ClusterIP
-    port: 9000
-
-  # Disable default ingress
-  server:
-    ingress:
-      enabled: false
-
-  # SQLite persistence with Longhorn
-  persistence:
-    enabled: true
-    size: 5Gi
-    storageClass: "longhorn"
+# Use Longhorn for persistence
+persistence:
+  enabled: true
+  size: 5Gi
+  storageClass: longhorn
