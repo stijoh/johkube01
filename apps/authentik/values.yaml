@@ -1,14 +1,12 @@
 authentik:
+  # Let Helm generate the secret key automatically
+  secret_key: ""  # This will auto-generate
+
   # Disable external databases - use SQLite
   postgresql:
     enabled: false
   redis:
     enabled: false
-
-  # Environment from secrets
-  envFrom:
-    - secretRef:
-        name: authentik-secret
 
   # Additional environment variables
   env:
